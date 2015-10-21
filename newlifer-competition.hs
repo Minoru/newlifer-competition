@@ -5,7 +5,7 @@ import Data.Maybe (fromMaybe)
 import qualified Data.Map.Strict as MS
 
 findLongestPalyndrome :: String -> String
-findLongestPalyndrome input = helper 0 0 input
+findLongestPalyndrome input = helper 0 "" input
   where
     charmap :: MS.Map Char [String]
     charmap = foldl'
@@ -13,17 +13,15 @@ findLongestPalyndrome input = helper 0 0 input
                 MS.empty
                 (filter (not.null) $ tails $ reverse input)
 
-    helper :: Int -> Int -> String -> String
-    helper _ _ "" = ""
+    helper :: Int -> String -> String -> String
+    helper _ best "" = best
     helper n best string@(h:str)
-      | length string < best = ""
+      | length string < length best = best
       | otherwise =
-        let alternative = helper (succ n) best str
-
-            -- suppose the palyndrome starts right here, on character h. What are
+        let -- suppose the palyndrome starts right here, on character h. What are
             -- all possible endings a palyndrome starting right here can have?
             endings =
-              filter ((> best) . length) $
+              filter ((> (length best)) . length) $
               map (reverse . (drop n) . reverse) $
               fromMaybe [] $
               MS.lookup h charmap
@@ -41,9 +39,9 @@ findLongestPalyndrome input = helper 0 0 input
                   maximumBy
                     (\x y -> compare (snd x) (snd y))
                     (map (\x -> (x, length x)) results)
-        in if (length alternative) > (length result)
-          then alternative
-          else result
+        in if (length result) > (length best)
+          then helper (n-1) result str
+          else helper (n-1) best str
 
 tests = [
     "abba"
