@@ -1,5 +1,6 @@
 import qualified Version1 as V1
 import qualified Version2 as V2
+import qualified Version3 as V3
 
 import Control.Monad (forM_)
 
@@ -26,10 +27,14 @@ main = do
   putStrLn "Testing version 2"
   test V2.findLongestPalyndrome
 
+  putStrLn "Testing version 3"
+  test V3.findLongestPalyndrome
+
   putStrLn "Benchmarking"
   defaultMain [
       bgroup "v1" $ map ((benchmark V1.findLongestPalyndrome) . fst) tests
     , bgroup "v2" $ map ((benchmark V2.findLongestPalyndrome) . fst) tests
+    , bgroup "v3" $ map ((benchmark V3.findLongestPalyndrome) . fst) tests
     ]
 
   where

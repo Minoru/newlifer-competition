@@ -18,6 +18,8 @@ executable newlifer-competition
   build-depends:       base
                      , containers
                      , criterion
+                     , bytestring
   other-modules:       Version1
                      , Version2
+                     , Version3
   default-language:    Haskell2010
