@@ -1,4 +1,7 @@
-import Control.Monad (forM_)
+module Version2 (
+  findLongestPalyndrome
+) where
+
 import Data.List (foldl', tails, maximumBy)
 import Data.Maybe (fromMaybe)
 
@@ -40,22 +43,5 @@ findLongestPalyndrome input = helper 0 "" input
                     (\x y -> compare (snd x) (snd y))
                     (map (\x -> (x, length x)) results)
         in if (length result) > (length best)
-          then helper (n-1) result str
-          else helper (n-1) best str
-
-tests = [
-    "abba"
-  , "xyabcdcbax"
-  , "ThesampletextthatcouldbereadedthesameinbothordersArozaupalanalapuazorA"
-  ]
-
-isPalindrome :: String -> Bool
-isPalindrome = reverse >>= (==)
-
-main = forM_ tests $ \input -> do
-  let result = findLongestPalyndrome input
-  if isPalindrome result
-    then putStr "\x1b[32m✓\x1b[00m"
-    else putStr "\x1b[31m✗\x1b[00m"
-  putStrLn $ "  " ++ input ++ "  →  " ++ result
-
+          then helper (succ n) result str
+          else helper (succ n) best str

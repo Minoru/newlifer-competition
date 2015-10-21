@@ -1,0 +1,23 @@
+name:                newlifer-competition
+version:             0.1.0.0
+synopsis:            Finding longest palindromes in a string
+homepage:            https://gist.github.com/Minoru/6c3059351c25b98c8702
+license:             PublicDomain
+author:              Alexander Batischev
+maintainer:          eual.jp@gmail.com
+copyright:           2015 Alexander Batischev
+category:            Misc
+build-type:          Simple
+-- extra-source-files:
+cabal-version:       >=1.10
+
+executable newlifer-competition
+  hs-source-dirs:      src
+  main-is:             newlifer-competition.hs
+  ghc-options:         
+  build-depends:       base
+                     , containers
+                     , criterion
+  other-modules:       Version1
+                     , Version2
+  default-language:    Haskell2010
