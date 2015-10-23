@@ -1,8 +1,11 @@
 import qualified Version1 as V1
 import qualified Version2 as V2
 import qualified Version3 as V3
+import qualified Version4 as V4
 
+import Control.DeepSeq (deepseq)
 import Control.Monad (forM_)
+import qualified Data.Text as T
 
 import Criterion.Main
 
@@ -30,11 +33,20 @@ main = do
   putStrLn "Testing version 3"
   test V3.findLongestPalyndrome
 
+  putStrLn "Testing version 4"
+  test (T.unpack . V4.findLongestPalyndrome . T.pack)
+
   putStrLn "Benchmarking"
   defaultMain [
       bgroup "v1" $ map ((benchmark V1.findLongestPalyndrome) . fst) tests
     , bgroup "v2" $ map ((benchmark V2.findLongestPalyndrome) . fst) tests
     , bgroup "v3" $ map ((benchmark V3.findLongestPalyndrome) . fst) tests
+    , bgroup "v4" $
+        map
+          (\(input, _) ->
+            let str = T.pack input
+            in str `deepseq` bench input $ nf V4.findLongestPalyndrome str)
+          tests
     ]
 
   where

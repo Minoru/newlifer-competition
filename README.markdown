@@ -44,3 +44,16 @@ Version3
 ========
 
 This version is effectively version2, but uses ByteStrings internally.
+
+Version4
+========
+
+The same as version3, but with Text instead of ByteStrings.
+
+In version3, I went with ByteStrings instead of Text because the latter
+promised worse O() on operations I used. But I lost the ability to process
+Unicode strings correctly. Now I'm not sure I've done the right thing, so let's
+just benchmark it!
+
+Result: at the moment, it's even slower than Version1. It's probably just me,
+though; I'll try to optimize it.
