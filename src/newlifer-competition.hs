@@ -45,9 +45,12 @@ main = do
         map
           (\(input, _) ->
             let str = T.pack input
-            in str `deepseq` bench input $ nf V4.findLongestPalyndrome str)
+                name = "input length " ++ (show $ length input)
+            in str `deepseq` bench name $ nf V4.findLongestPalyndrome str)
           tests
     ]
 
   where
-    benchmark function string = bench string $ nf function string
+    benchmark function string =
+      let name = "input length " ++ (show $ length string)
+      in bench name $ nf function string
