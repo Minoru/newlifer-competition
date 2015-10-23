@@ -29,7 +29,7 @@ findLongestPalyndrome input = helper 0 T.empty input
                 -- here can have?
                 endings =
                   filter ((> (T.length best)) . T.length) $
-                  map (T.reverse . (T.drop n) . T.reverse) $
+                  map (T.dropEnd n) $
                   fromMaybe [] $ MS.lookup h charmap
                 -- for each ending, check if we do have a palyndrome starting
                 -- right here and ending with a given ending
